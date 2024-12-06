@@ -1,28 +1,22 @@
-// services/bookService.ts
-import axios from 'axios';
-import { Book } from '../models/Book';
+import axios from "axios";
+import { Book } from "../models/Book";
 
-const API_URL = 'http://localhost:5000/api/books';
+const API_URL = "http://localhost:5000/books"; // Replace with your actual backend URL
 
-// Fetch all books
 export const getBooks = async (): Promise<Book[]> => {
-  const response = await axios.get<Book[]>(API_URL);  // Specify Book[] as the expected response type
-  return response.data;
+  const response = await axios.get<Book[]>(API_URL); // Specify the type as `Book[]`
+  return response.data; // Ensure response.data matches the `Book[]` type
 };
 
-// Add a new book
-export const addBook = async (book: Book): Promise<Book> => {
-  const response = await axios.post<Book>(API_URL, book);  // Specify Book as the expected response type
-  return response.data;
+export const addBook = async (newBook: Book): Promise<Book> => {
+  const response = await axios.post<Book>(API_URL, newBook);
+  return response.data; // Return the added book
 };
 
-// Update an existing book
-export const updateBook = async (id: number, book: Book): Promise<Book> => {
-  const response = await axios.put<Book>(`${API_URL}/${id}`, book);  // Specify Book as the expected response type
-  return response.data;
-};
-
-// Delete a book
 export const deleteBook = async (id: number): Promise<void> => {
   await axios.delete(`${API_URL}/${id}`);
+};
+
+export const updateBook = async (id: number, book: Book): Promise<void> => {
+  await axios.put(`${API_URL}/${id}`, book);
 };
