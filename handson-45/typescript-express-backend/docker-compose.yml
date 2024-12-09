@@ -1,0 +1,51 @@
+# version: "3.8" # Define the Docker Compose version
+
+# services:
+#   api:
+#     build:
+#       context: . # Path to the Dockerfile
+#       dockerfile: Dockerfile
+#     ports:
+#       - "5000:5000" # Map port 5000 on the host to port 5000 in the container
+#     volumes:
+#       - .:/app # Mount the current directory to /app in the container
+#     environment:
+#       - NODE_ENV=development # Example environment variable
+#     depends_on:
+#       - db # Ensure the database service starts first
+
+#   db:
+#     image: mysql:8.0 # Use the official MySQL image
+#     container_name: mysql_container
+#     restart: always
+#     environment:
+#       MYSQL_ROOT_PASSWORD: rootpassword
+#       MYSQL_DATABASE: book_management
+#       MYSQL_USER: api_user
+#       MYSQL_PASSWORD: api_password
+#     ports:
+#       - "3306:3306" # Map MySQL port
+#     volumes:
+#       - db_data:/var/lib/mysql # Persistent storage for the database
+
+# volumes:
+#   db_data:
+
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Reference to the Dockerfile to build your API container
+    ports:
+      - "5000:5000"  # Expose port 5000 for your API
+    environment:
+      - NODE_ENV=production  # Optional: Set environment variables for your API
+    volumes:
+      - .:/app  # Mount your app directory to the container's working directory (optional)
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
